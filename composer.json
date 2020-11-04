@@ -1,0 +1,47 @@
+{
+    "name": "mileschou/schemarkdown-cli",
+    "description": "The schema document generator",
+    "type": "project",
+    "license": "MIT",
+    "keywords": [
+        "laravel", "database"
+    ],
+    "authors": [
+        {
+            "name": "MilesChou",
+            "email": "jangconan@gmail.com",
+            "homepage": "https://mileschou.github.io/",
+            "role": "Maintainer"
+        }
+    ],
+    "require": {
+        "php": ">=7.3",
+        "illuminate/console": "^8",
+        "illuminate/events": "^8",
+        "laravel-bridge/scratch": "^1.6",
+        "mikey179/vfsstream": "^1.6",
+        "monolog/monolog": "^2",
+        "symfony/yaml": "^5",
+        "vlucas/phpdotenv": "^4"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^0.12",
+        "phpunit/phpunit": "^9",
+        "psy/psysh": "^0.10",
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}

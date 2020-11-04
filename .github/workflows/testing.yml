@@ -1,0 +1,43 @@
+name: Testing
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install deps
+        uses: docker://ghcr.io/mileschou/composer:7.3
+        with:
+          args: install
+      - name: Prepare
+        uses: docker://php:7.3
+        with:
+          args: ./scripts/bump-version ${TRAVIS_BRANCH}
+      - name: Check coding style
+        uses: docker://php:7.3
+        with:
+          args: php vendor/bin/phpcs
+      - name: Unit test
+        uses: docker://php:7.3
+        with:
+          args: php vendor/bin/phpunit
+      - name: Run test
+        uses: docker://php:7.3
+        with:
+          args: php bin/app.php example
